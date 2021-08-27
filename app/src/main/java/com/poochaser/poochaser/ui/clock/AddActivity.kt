@@ -14,7 +14,7 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         var clock: String? = ""
         var type: Int = 1
-        var color: String? = ""
+        var color: String? = "red"
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         backButton.setOnClickListener {
@@ -74,12 +74,13 @@ class AddActivity : AppCompatActivity() {
             color = "yellow"
         }
         addButton.setOnClickListener {
-            val intent = Intent()
             clock = timeTextView2.text.toString()
             intent.putExtra("clock", clock)
             intent.putExtra("type", type)
             intent.putExtra("color", color)
-            setResult(2, intent)
+            setResult(1, intent)
+            if (intent.getIntExtra("requestcode", 1) == 2)
+                setResult(2, intent)
             finish()
         }
     }
