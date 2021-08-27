@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PooChaser</string>
+    <string name="title_activity_bottom_navigation">MainActivity</string>
+    <string name="title_clock">Clock</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_settings">Settings</string>
 </resources>
