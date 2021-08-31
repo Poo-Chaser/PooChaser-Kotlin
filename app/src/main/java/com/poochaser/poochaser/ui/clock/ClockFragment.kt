@@ -2,6 +2,7 @@ package com.poochaser.poochaser.ui.clock
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.poochaser.poochaser.R
 import kotlinx.android.synthetic.main.fragment_clock.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.concurrent.thread
 
 class ClockFragment : Fragment() {
@@ -50,6 +52,10 @@ class ClockFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val timeFormat = SimpleDateFormat("MM/dd hh:mm a", Locale.ENGLISH)
+        timeTextClock.format12Hour = timeFormat.toLocalizedPattern()
+        timeTextClock.textLocale = Locale.ENGLISH
+        timeTextClock.refreshDrawableState()
         dataAdapter = DataAdapter(requireContext())
         recyclerView.adapter = dataAdapter
         dataAdapter.setItemClickListener(object: DataAdapter.OnitemClickListener{
@@ -62,12 +68,31 @@ class ClockFragment : Fragment() {
                 dialog.setContentView(dialogView)
                 dialog.show()
                 editButton.setOnClickListener {
-                    edit(position)
+                    val editIntent = Intent(editContext, AddActivity::class.java)
+                    editIntent.putExtra("clock", dataAdapter.datas[position].clock)
+                    editIntent.putExtra("type", dataAdapter.datas[position].type)
+                    editIntent.putExtra("color", dataAdapter.datas[position].color)
+                    editIntent.putExtra("requestcode", 2)
+                    editIntent.putExtra("position", position)
+                    startActivityForResult(editIntent, 2)
                 }
                 deleteButton.setOnClickListener {
-                    datas.removeAt(position)
-                    dialog.dismiss()
-                    dataAdapter.notifyDataSetChanged()
+                    val deleteDialogView = layoutInflater.inflate(R.layout.delete_dialog, null)
+                    val deleteDialog = Dialog(requireContext(),R.style.TransparentDialog)
+                    deleteDialog.setContentView(deleteDialogView)
+                    val deleteDialogCancelButton = deleteDialog.findViewById<Button>(R.id.deleteDialogCancelButton)
+                    val deleteDialogDeleteButton = deleteDialog.findViewById<Button>(R.id.deleteDialogDeleteButton)
+                    deleteDialogCancelButton.setOnClickListener {
+                        deleteDialog.dismiss()
+                        dialog.dismiss()
+                    }
+                    deleteDialogDeleteButton.setOnClickListener {
+                        deleteDialog.dismiss()
+                        datas.removeAt(position)
+                        dialog.dismiss()
+                        dataAdapter.notifyDataSetChanged()
+                    }
+                    deleteDialog.show()
                 }
                 cancelButton.setOnClickListener {
                     dialog.dismiss()
@@ -96,12 +121,5 @@ class ClockFragment : Fragment() {
             dataAdapter.datas[position].color = data.getStringExtra("color")
             dataAdapter.notifyDataSetChanged()
         }
-    }
-
-    fun edit(position: Int){
-        val editIntent = Intent(editContext, AddActivity::class.java)
-        editIntent.putExtra("requestcode", 2)
-        editIntent.putExtra("position", position)
-        startActivityForResult(editIntent, 2)
     }
 }
