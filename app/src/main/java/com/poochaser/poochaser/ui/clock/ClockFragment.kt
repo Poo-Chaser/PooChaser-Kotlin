@@ -17,11 +17,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.poochaser.poochaser.R
 import kotlinx.android.synthetic.main.fragment_clock.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
 class ClockFragment : Fragment() {
@@ -30,6 +35,8 @@ class ClockFragment : Fragment() {
     lateinit var dataAdapter: DataAdapter
     val datas = mutableListOf<Data>()
     var editContext: Context? = null
+    val user = Firebase.auth.currentUser
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,8 +115,24 @@ class ClockFragment : Fragment() {
                 val clock = data!!.getStringExtra("clock")
                 val type = data.getIntExtra("type", 1)
                 val color = data.getStringExtra("color")
-                add(Data(clock, type, color))
+                Log.d("clock",clock)
+                val timeFormat = SimpleDateFormat("yyyy")
+                val year : String = timeFormat.format(System.currentTimeMillis())
+                timeFormat.applyPattern("MM")
+                val month : String = timeFormat.format(System.currentTimeMillis())
+                timeFormat.applyPattern("dd")
+                val day : String = timeFormat.format(System.currentTimeMillis())
+                var newClock : String = ""
+                if (clock[6]=='A')
+                    newClock = clock.substring(0,5)
+                else{
+                    val newHour = 12 + clock.substring(0,2).toInt()
+                    newClock = "" + newHour + clock.substring(2,5)
+                }
+                db.collection(user!!.uid).document(year).collection(month).document(day)
+                    .collection("data").document(newClock).set(hashMapOf("type" to type, "color" to color))
 
+                add(Data(clock, type, color))
                 dataAdapter.datas = datas
                 dataAdapter.notifyDataSetChanged()
             }
