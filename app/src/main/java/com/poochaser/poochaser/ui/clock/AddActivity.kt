@@ -161,6 +161,7 @@ class AddActivity : AppCompatActivity() {
         clock = intent.getStringExtra("clock")
         type = intent.getIntExtra("type", 0)
         color = intent.getStringExtra("color")
+        timeTextView2.text = clock
         if(type == 1)
             type1ImageView.setImageResource(R.drawable.type1_selected)
         else if(type == 2)

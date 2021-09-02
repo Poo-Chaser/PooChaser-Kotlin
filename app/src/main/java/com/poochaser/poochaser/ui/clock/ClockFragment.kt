@@ -33,10 +33,11 @@ class ClockFragment : Fragment() {
 
     private lateinit var clockViewModel: ClockViewModel
     lateinit var dataAdapter: DataAdapter
-    val datas = mutableListOf<Data>()
-    var editContext: Context? = null
     val user = Firebase.auth.currentUser
     val db = FirebaseFirestore.getInstance()
+    var year : String = ""
+    var month : String = ""
+    var day : String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,10 +50,16 @@ class ClockFragment : Fragment() {
         val addButton: ImageButton = root.findViewById(R.id.addButton)
         addButton.setOnClickListener {
             val addIntent = Intent(root.context, AddActivity::class.java)
-            editContext = root.context
             addIntent.putExtra("requestcode", 1)
             startActivityForResult(addIntent, 1)
         }
+        val timeFormat = SimpleDateFormat("yyyy")
+        year = timeFormat.format(System.currentTimeMillis())
+        timeFormat.applyPattern("MM")
+        month = timeFormat.format(System.currentTimeMillis())
+        timeFormat.applyPattern("dd")
+        day = timeFormat.format(System.currentTimeMillis())
+
         return root
 
     }
@@ -75,13 +82,14 @@ class ClockFragment : Fragment() {
                 dialog.setContentView(dialogView)
                 dialog.show()
                 editButton.setOnClickListener {
-                    val editIntent = Intent(editContext, AddActivity::class.java)
+                    val editIntent = Intent(requireContext(), AddActivity::class.java)
                     editIntent.putExtra("clock", dataAdapter.datas[position].clock)
                     editIntent.putExtra("type", dataAdapter.datas[position].type)
                     editIntent.putExtra("color", dataAdapter.datas[position].color)
                     editIntent.putExtra("requestcode", 2)
                     editIntent.putExtra("position", position)
                     startActivityForResult(editIntent, 2)
+                    dialog.dismiss()
                 }
                 deleteButton.setOnClickListener {
                     val deleteDialogView = layoutInflater.inflate(R.layout.delete_dialog, null)
@@ -95,9 +103,10 @@ class ClockFragment : Fragment() {
                     }
                     deleteDialogDeleteButton.setOnClickListener {
                         deleteDialog.dismiss()
-                        datas.removeAt(position)
+                        db.collection(user!!.uid).document(year).collection(month).document(day)
+                            .collection("data").document(time12to24(dataAdapter.datas[position].clock)).delete()
                         dialog.dismiss()
-                        dataAdapter.notifyDataSetChanged()
+                        dataTransfer()
                     }
                     deleteDialog.show()
                 }
@@ -106,43 +115,58 @@ class ClockFragment : Fragment() {
                 }
             }
         })
+        dataTransfer()
+    }
+
+    fun time12to24(time : String): String {
+        if(time[6] == 'A')
+            return time.substring(0,5)
+        else
+            return "" + (time.substring(0,2).toInt() + 12) + time.substring(2,5)
+    }
+
+    fun time24to12(time: String): String{
+        if(time.substring(0,2).toInt() > 12)
+            return "" + (time.substring(0,2).toInt() - 12) + time.substring(2,5) + " PM"
+        else
+            return time + " AM"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == 1){
-            datas.apply{
-                val clock = data!!.getStringExtra("clock")
-                val type = data.getIntExtra("type", 1)
-                val color = data.getStringExtra("color")
-                Log.d("clock",clock)
-                val timeFormat = SimpleDateFormat("yyyy")
-                val year : String = timeFormat.format(System.currentTimeMillis())
-                timeFormat.applyPattern("MM")
-                val month : String = timeFormat.format(System.currentTimeMillis())
-                timeFormat.applyPattern("dd")
-                val day : String = timeFormat.format(System.currentTimeMillis())
-                var newClock : String = ""
-                if (clock[6]=='A')
-                    newClock = clock.substring(0,5)
-                else{
-                    val newHour = 12 + clock.substring(0,2).toInt()
-                    newClock = "" + newHour + clock.substring(2,5)
-                }
-                db.collection(user!!.uid).document(year).collection(month).document(day)
-                    .collection("data").document(newClock).set(hashMapOf("type" to type, "color" to color))
-
-                add(Data(clock, type, color))
-                dataAdapter.datas = datas
-                dataAdapter.notifyDataSetChanged()
-            }
+            val clock = data!!.getStringExtra("clock")
+            val type = data.getIntExtra("type", 1)
+            val color = data.getStringExtra("color")
+            Log.d("clock",clock)
+            var newClock = time12to24(clock)
+            db.collection(user!!.uid).document(year).collection(month).document(day)
+                .collection("data").document(newClock).set(hashMapOf("type" to type, "color" to color))
+            dataTransfer()
         }
         if(resultCode == 2){
             val position = data!!.getIntExtra("position", 1)
-            dataAdapter.datas[position].clock = data!!.getStringExtra("clock")
-            dataAdapter.datas[position].type = data.getIntExtra("type", 1)
-            dataAdapter.datas[position].color = data.getStringExtra("color")
-            dataAdapter.notifyDataSetChanged()
+            val beforeClock = time12to24(dataAdapter.datas[position].clock)
+            val afterClock = time12to24(data!!.getStringExtra("clock"))
+            val type = data.getIntExtra("type", 1)
+            val color = data.getStringExtra("color")
+            db.collection(user!!.uid).document(year).collection(month).document(day)
+                .collection("data").document(beforeClock).delete()
+            db.collection(user!!.uid).document(year).collection(month).document(day)
+                .collection("data").document(afterClock).set(hashMapOf("type" to type, "color" to color))
+            dataTransfer()
         }
+    }
+
+    fun dataTransfer(){
+        dataAdapter.datas.clear()
+        db.collection(user!!.uid).document(year).collection(month).document(day)
+            .collection("data").get().addOnSuccessListener { documents ->
+                for(document in documents){
+                    dataAdapter.datas.add(Data(time24to12(document.id),
+                        document.get("type").toString().toInt(), document.getString("color")!!))
+                }
+                dataAdapter.notifyDataSetChanged()
+            }
     }
 }
