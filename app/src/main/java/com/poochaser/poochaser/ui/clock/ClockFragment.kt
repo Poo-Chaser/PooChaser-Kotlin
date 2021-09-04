@@ -126,8 +126,12 @@ class ClockFragment : Fragment() {
     }
 
     fun time24to12(time: String): String{
-        if(time.substring(0,2).toInt() > 12)
-            return "" + (time.substring(0,2).toInt() - 12) + time.substring(2,5) + " PM"
+        if(time.substring(0,2).toInt() > 12) {
+            if((time.substring(0, 2).toInt() - 12) < 10)
+                return "0" + (time.substring(0, 2).toInt() - 12) + time.substring(2, 5) + " PM"
+            else
+                return "" + (time.substring(0, 2).toInt() - 12) + time.substring(2, 5) + " PM"
+        }
         else
             return time + " AM"
     }
