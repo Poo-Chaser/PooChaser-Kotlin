@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/clock"
+        android:icon="@drawable/clock"
+        android:enabled="true"
+        android:title="clock" />
+    <item
+        android:id="@+id/calendar"
+        android:icon="@drawable/calendar"
+        android:enabled="true"
+        android:title="calendar" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings"
+        android:enabled="true"
+        android:title="settings" />
+</menu>

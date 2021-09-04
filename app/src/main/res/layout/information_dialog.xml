@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="340dp"
+        android:layout_height="600dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/information_dialog_rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/informationDialogBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/close" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/notosanscjkkrbold"
+            android:text="배변 종류"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/informationDialogBackButton">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type1LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type1ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type1" />
+
+                        <TextView
+                            android:id="@+id/type1TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 1형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type1TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="견과류 처럼 분리되어 있고, 딱딱한 덩어리.\n 배변이 어렵다."
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type1LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type2LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type2ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type2" />
+
+                        <TextView
+                            android:id="@+id/type2TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 2형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type2TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="소세지 모양이지만 단단하며 덩어리 진 상태"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type2LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type3LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type3ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type3" />
+
+                        <TextView
+                            android:id="@+id/type3TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 3형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type3TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="소세지 같이 보이지만 겉에 금이 가있는 상태"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type3LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type4LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type4ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type4" />
+
+                        <TextView
+                            android:id="@+id/type4TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 4형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type4TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="소세지나 뱀처럼 매끄럽고 부드러운 상태"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type4LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type5LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type5ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type5" />
+
+                        <TextView
+                            android:id="@+id/type5TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 5형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type5TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="윤곽이 뚜렷한 가장자리의 부드러운 방울 형태."
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type5LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type6LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type6ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type6" />
+
+                        <TextView
+                            android:id="@+id/type6TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 6형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type6TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="테두리가 울퉁불퉁하며 무른 형태\n배설하자마자 부셔질 정도로 부드러운 상태"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type6LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="323dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/information_dialog_item_rectangle">
+
+                    <LinearLayout
+                        android:id="@+id/type7LinearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/type7ImageView"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/type7" />
+
+                        <TextView
+                            android:id="@+id/type7TitleView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/notosanscjkkrmedium"
+                            android:text="제 7형"
+                            android:textColor="#000000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/type7TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/notosanscjkkrmedium"
+                        android:text="단단한 조각이 없는 묽은 변\n전체적으로 액채로 되어 있는 상태"
+                        android:textColor="#000000"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/type7LinearLayout"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
