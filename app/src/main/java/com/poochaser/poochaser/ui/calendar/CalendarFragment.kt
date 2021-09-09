@@ -159,4 +159,9 @@ class CalendarFragment : Fragment() {
                 }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        calendarView.selectedDate = CalendarDay.today()
+    }
 }

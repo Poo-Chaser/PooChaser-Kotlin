@@ -27,6 +27,8 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+        if(auth?.currentUser != null)
+            loginSuccess()
         signInButton.setOnClickListener {
             signIn()
         }

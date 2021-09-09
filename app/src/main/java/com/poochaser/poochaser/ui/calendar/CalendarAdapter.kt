@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.item.view.*
 import java.time.Clock
 
 class CalendarAdapter(private val context: Context) : RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
-    private lateinit var itemClickListener: OnitemClickListener
     var datas = mutableListOf<Data>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item,parent,false)
@@ -34,13 +33,6 @@ class CalendarAdapter(private val context: Context) : RecyclerView.Adapter<Calen
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(datas[position])
-        holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it, position)
-        }
-    }
-
-    interface OnitemClickListener {
-        fun onClick(v: View, position: Int)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
