@@ -15,6 +15,8 @@ import com.poochaser.poochaser.R
 import com.poochaser.poochaser.ui.clock.CalendarAdapter
 import com.poochaser.poochaser.ui.clock.Data
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import kotlinx.android.synthetic.main.fragment_clock.*
 import java.text.SimpleDateFormat
@@ -22,6 +24,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class CalendarFragment : Fragment() {
 
@@ -53,6 +56,7 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         calendarView.setWeekDayLabels(arrayOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"))
+        calendarView.topbarVisible = false
         calendarView.setOnDateChangedListener { widget, date, selected ->
             val timeFormat = SimpleDateFormat("yyyy")
             val selecedDate = calendarView.selectedDate!!
@@ -64,7 +68,9 @@ class CalendarFragment : Fragment() {
             month = timeFormat.format(date)
             timeFormat.applyPattern("dd")
             day = timeFormat.format(date)
-            dataTransfer()
+            thread(start = true){
+                dataTransfer()
+            }
         }
         calendarView.setOnMonthChangedListener { widget, date ->
             val timeFormat = SimpleDateFormat("yyyy")
@@ -74,11 +80,14 @@ class CalendarFragment : Fragment() {
             year = timeFormat.format(date)
             timeFormat.applyPattern("MM")
             month = timeFormat.format(date)
+            monthTextChange(month)
             timeFormat.applyPattern("dd")
             day = timeFormat.format(date)
             calendarAdapter.datas.clear()
             calendarAdapter.notifyDataSetChanged()
-            dataCheck()
+            thread(start = true){
+                dataCheck()
+            }
         }
         calendarView.addDecorator(DateSelectorDecorator(requireActivity()))
         calendarAdapter = CalendarAdapter(requireContext())
@@ -87,10 +96,13 @@ class CalendarFragment : Fragment() {
         year = timeFormat.format(System.currentTimeMillis())
         timeFormat.applyPattern("MM")
         month = timeFormat.format(System.currentTimeMillis())
+        monthTextChange(month)
         timeFormat.applyPattern("dd")
         day = timeFormat.format(System.currentTimeMillis())
-        dataTransfer()
-        dataCheck()
+        thread(start = true){
+            dataTransfer()
+            dataCheck()
+        }
         calendarView.setDateSelected(CalendarDay.today(),true)
     }
 
@@ -158,6 +170,12 @@ class CalendarFragment : Fragment() {
                     calendarView.selectedDate = calendarView.selectedDate
                 }
         }
+    }
+
+    fun monthTextChange(date: String){
+        val number = date.toInt()
+        val text = number.toString()
+        monthTextView.text = text + "월"
     }
 
     override fun onResume() {
